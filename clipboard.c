@@ -1,12 +1,12 @@
 #include "clipboard.h"
 
-int put_string(const wchar_t *str)
+int put_string(const wchar_t *str, size_t len)
 {
     if (!OpenClipboard(NULL))
         return -1;
 
     EmptyClipboard();
-    HGLOBAL clip = GlobalAlloc(GMEM_MOVEABLE, wcslen(str) * sizeof(wchar_t) + 3);
+    HGLOBAL clip = GlobalAlloc(GMEM_MOVEABLE, len);
     if (!clip)
     {
         CloseClipboard();

@@ -3,7 +3,7 @@
  * 
  * @author Idan Saltzman
  * @date 2024-06-07
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 #pragma once
@@ -15,7 +15,7 @@
  * @param str The string to put into the clipboard
  * @return 0 if the string was successfully put into the clipboard, -1 if the clipboard could not be opened
  */
-int put_string(const wchar_t *str);
+int put_string(const wchar_t *str, size_t len);
 
 /**
  * @brief Get a string from the clipboard
