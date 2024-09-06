@@ -11,7 +11,7 @@
 
 #define MAX 0x80000 // 512KB
 
-int main()
+int main(void)
 {
     wchar_t str[MAX];
     size_t len = get_string(str);

@@ -10,11 +10,11 @@
 #include <wchar.h>
 
 /// Check if the character is an English letter
-#define eng(c) ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+#define eng(c) (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
 /// Check if the character is a Hebrew letter
-#define heb(c) (c >= 0x05D0 && c <= 0x05EA)
+#define heb(c) ((c) >= 0x05D0 && (c) <= 0x05EA)
 /// Convert the character to lowercase
-#define lower(c) (c >= 'A' && c <= 'Z' ? c + 32 : c)
+#define lower(c) ((c) >= 'A' && (c) <= 'Z' ? (c) + 32 : (c))
 
 /**
  * @brief A mapping between English and Hebrew characters
