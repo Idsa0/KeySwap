@@ -30,12 +30,14 @@ The program only supports conversions between English and Hebrew and I do not in
     cd <repository_directory>
     ```
 3. Compile the program:
-    ```sh
-    gcc -c main.c -o main.out
-    gcc -c clipboard.c -o clipboard.out
-    gcc -c keyboard.c -o keyboard.out
-    gcc -o KeySwap.exe main.out clipboard.out keyboard.out
-    ```
+   - If you have makefile installed:
+     ```sh
+     make
+     ```
+   - Otherwise with gcc:
+     ```sh
+     gcc -O3 clipboard.c keyboard.c main.c -o KeySwap.exe
+     ```
 
 ### Using
 
