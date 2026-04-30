@@ -9,22 +9,23 @@
 #include "clipboard.h"
 #include "keyboard.h"
 
-#define MAX 0x80000 // 512KB
+/* Use a byte-budgeted MAX to avoid accidental oversized stack allocations. */
+#define MAX_BYTES (512 * 1024)
+#define MAX (MAX_BYTES / sizeof(wchar_t))
 
 int main(void)
 {
     wchar_t str[MAX];
-    size_t len = get_string(str);
+    int len = get_string(str, MAX);
     if (len == -1)
-        // This happens when the clipboard is empty or contains data that is not a string
-        return EXIT_FAILURE;
+        /* This happens when the clipboard is empty, not text, or larger than MAX */
+        return 1;
 
-    int lang = gmlang(str, len);
-    map(lang, str, len);
+    LANG lang = gmlang(str, (size_t)len);
+    map(lang, str, (size_t)len);
 
-    if (put_string(str, len * sizeof(wchar_t) + 3) == -1)
-        // Not sure when this would happen
-        return EXIT_FAILURE;
+    if (put_string(str) == -1)
+        return 1;
 
-    return EXIT_SUCCESS;
+    return 0;
 }

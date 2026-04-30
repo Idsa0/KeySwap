@@ -1,0 +1,24 @@
+1 ICON "resources/KeySwap.ico"
+
+1 VERSIONINFO
+FILEVERSION 1,0,2,0
+PRODUCTVERSION 1,0,2,0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Idan Saltzman\0"
+            VALUE "FileDescription", "KeySwap - Swap text between English and Hebrew keyboard layouts\0"
+            VALUE "FileVersion", "1.0.2\0"
+            VALUE "InternalName", "KeySwap.exe\0"
+            VALUE "OriginalFilename", "KeySwap.exe\0"
+            VALUE "ProductName", "KeySwap\0"
+            VALUE "ProductVersion", "1.0.2\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END

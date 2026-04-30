@@ -2,12 +2,12 @@
 
 ## Overview
 
-Have you ever started writing something only to realize it’s in the wrong language, ending up with text like:
+Have you ever started writing something only to realize it's in the wrong language, ending up with text like:
 _nh akt tufk phmv go tbbx kt neck phmv cfkk!_
 
 KeySwap is here to solve that problem for you!
 
-KeySwap is a straightforward program that converts the text you’ve copied from one language to another.
+KeySwap is a straightforward program that converts the text you've copied from one language to another.
 
 ### Example
 

@@ -71,56 +71,57 @@ mapping hebmap[] = {
     {'a', 0x05E9},
     {',', 0x05EA}};
 
-#define MAPSIZE sizeof(keymap) / sizeof(mapping)
+#define MAPSIZE (sizeof(keymap) / sizeof(mapping))
 
-wchar_t bsearch(wchar_t key)
+_Static_assert((sizeof(keymap) / sizeof(mapping)) == (sizeof(hebmap) / sizeof(mapping)), "keymap/hebmap size mismatch");
+
+/**
+ * Binary search helper over hebmap (sorted by hebrew).
+ * Returns the english char for a hebrew key or the key unchanged.
+ */
+wchar_t heb_to_english_char(wchar_t key)
 {
-    int low = 0, high = MAPSIZE - 1, mid;
-    while (low <= high)
+    size_t low = 0, high = MAPSIZE; /* high is exclusive */
+    while (low < high)
     {
-        mid = (low + high) / 2;
+        size_t mid = low + (high - low) / 2;
         if (hebmap[mid].hebrew == key)
             return hebmap[mid].english;
         else if (hebmap[mid].hebrew < key)
             low = mid + 1;
         else
-            high = mid - 1;
+            high = mid;
     }
     return key;
 }
 
 LANG gmlang(const wchar_t *str, size_t length)
 {
-    int eng = 0, heb = 0;
-    for (int i = 0; i < length; ++i)
-        eng(str[i]) ? ++eng : heb(str[i]) ? ++heb : 0;
+    int eng_count = 0, heb_count = 0;
+    for (size_t i = 0; i < length; ++i)
+        is_eng(str[i]) ? ++eng_count : is_heb(str[i]) ? ++heb_count : 0;
 
-    return eng > heb ? ENGLISH : HEBREW;
+    return eng_count > heb_count ? ENGLISH : HEBREW;
 }
 
 void map(LANG lang, wchar_t *str, size_t length)
 {
-    int i, j;
     if (lang == HEBREW)
     {
-        // Hebrew to English
-        // Since hebrew letters are not in a sequence, we will use binary search for the corresponding english letter
-        for (i = 0; i < length; ++i)
-        {
-            str[i] = bsearch(str[i]);
-        }
+        /* Hebrew to English: binary search per character */
+        for (size_t i = 0; i < length; ++i)
+            str[i] = heb_to_english_char(str[i]);
     }
     else
     {
-        // English to Hebrew
-        // Since english letters are in a sequence, we can use the index of the letter in the alphabet to find the corresponding hebrew letter
-        for (i = 0; i < length; ++i)
+        /* English to Hebrew: a-z mapped by position; punctuation handled by tail of keymap */
+        for (size_t i = 0; i < length; ++i)
         {
-            if (eng(str[i]))
-                str[i] = keymap[lower(str[i]) - 'a'].hebrew;
-
+            if (is_eng(str[i]))
+                str[i] = keymap[to_lower_w(str[i]) - L'a'].hebrew;
             else
-                for (j = 26; j < MAPSIZE; ++j)
+            {
+                for (size_t j = 26; j < MAPSIZE; ++j)
                 {
                     if (str[i] == keymap[j].english)
                     {
@@ -128,6 +129,7 @@ void map(LANG lang, wchar_t *str, size_t length)
                         break;
                     }
                 }
+            }
         }
     }
 }

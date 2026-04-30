@@ -3,18 +3,35 @@
  *
  * @author Idan Saltzman
  * @date 2024-06-07
- * @version 1.0.0
+ * @version 1.0.2
  */
 
 #pragma once
 #include <wchar.h>
 
-/// Check if the character is an English letter
-#define eng(c) (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
-/// Check if the character is a Hebrew letter
-#define heb(c) ((c) >= 0x05D0 && (c) <= 0x05EA)
-/// Convert the character to lowercase
-#define lower(c) ((c) >= 'A' && (c) <= 'Z' ? (c) + 32 : (c))
+/**
+ * Check if the character is an English letter
+ */
+static inline int is_eng(wchar_t c)
+{
+    return ((c) >= L'a' && (c) <= L'z') || ((c) >= L'A' && (c) <= L'Z');
+}
+
+/**
+ * Check if the character is a Hebrew letter
+ */
+static inline int is_heb(wchar_t c)
+{
+    return (c >= 0x05D0 && c <= 0x05EA);
+}
+
+/**
+ * Convert the character to lowercase
+ */
+static inline wchar_t to_lower_w(wchar_t c)
+{
+    return (c >= L'A' && c <= L'Z') ? (c + (L'a' - L'A')) : c;
+}
 
 /**
  * @brief A mapping between English and Hebrew characters
